@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { DocumentPlusIcon, HeartIcon } from '@heroicons/react/24/outline'
 function Header() {
   return (
-    <div className='flex justify-between items-center p-4'>
+    <div className='flex justify-between items-center p-4 pt-0'>
             <Link href="/">
 
         <div className='p-4 flex gap-2 items-center'>
