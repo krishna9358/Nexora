@@ -9,8 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@google/genai": "^0.13.0",
+    "@google/generative-ai": "^0.24.1",
     "@heroicons/react": "^2.2.0",
     "@radix-ui/react-slot": "^1.2.2",
+    "axios": "^1.9.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dedent": "^1.6.0",

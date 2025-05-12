@@ -7,53 +7,81 @@ import { PhotoIcon } from '@heroicons/react/24/outline'
 import { MessagesContext } from '@/context/MessagesContext'
 import { useContext } from 'react'
 import { useRouter } from 'next/navigation'
+
 function Hero() {
-    const [input, setInput] = useState();
+    const [input, setInput] = useState('');
     const { messages, setMessages } = useContext(MessagesContext);
     const router = useRouter();
+
     const onGenerate = (input) => {
-        setMessages( [...messages, { role: "user", content: input }]);
+        if (!input?.trim()) return;
+        setMessages([...messages, { role: "user", content: input }]);
         router.push('/chat');
     }
 
-  return (
-    <div className='flex flex-col gap-2 xl:mt-28 mt-20 items-center '>
-        <h2 className='text-4xl font-bold'>
-            {Lookup.HeroHeading}
-        </h2>
-        <p className='text-lg'>
-            {Lookup.HeroDescription}
-        </p>
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            onGenerate(input);
+        }
+    }
 
-        <div className='flex flex-col gap-2 mt-10'>
-            <div className='flex gap-2 items-center'>
-                <div className='relative w-full xl:w-1/2'>
-                    <div className='relative w-full xl:w-1/2'>
-                        <textarea 
-                            placeholder='Enter your prompt'
-                            className='w-full p-2 pt-2 rounded-md border border-[#4A4A4A] h-40 min-w-140 placeholder:text-sm placeholder:text-[#4A4A4A] placeholder:absolute placeholder:top-2 placeholder:left-2 focus:outline-none resize-none align-top'
-                            style={{verticalAlign: 'top'}}
-                            onChange={(e) => setInput(e.target.value)}
-                        />
-                        {input && <ArrowRightIcon 
-                        onClick={() => onGenerate(input)}
-                        className='w-8 h-8 bg-black text-white rounded-full p-1 absolute bottom-2 right-100 sm:-right-10 md:-right-28 lg:-right-60 xl:-right-100 cursor-pointer' />}
-                        <div className='absolute bottom-2 left-2 flex items-center gap-1 cursor-pointer'>
-                            <PhotoIcon className='w-8 h-8 text-black rounded-full p-1' />Attach
-                            </div>
+    return (
+        <div className='flex flex-col items-center px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-8rem)]'>
+            <div className='w-full max-w-4xl mx-auto text-center space-y-4 mt-16 sm:mt-20 lg:mt-24'>
+                <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight'>
+                    {Lookup.HeroHeading}
+                </h1>
+                <p className='text-base sm:text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto'>
+                    {Lookup.HeroDescription}
+                </p>
+            </div>
+
+            <div className='w-full max-w-2xl mx-auto mt-8 sm:mt-12'>
+                <div className='relative'>
+                    <textarea 
+                        value={input}
+                        placeholder='Enter your prompt'
+                        className='w-full p-4 rounded-xl border border-[#4A4A4A] h-32 sm:h-40 resize-none text-base placeholder:text-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all shadow-md'
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyDown={handleKeyPress}
+                    />
+                    <div className='absolute bottom-4 right-4 flex items-center gap-3'>
+                        <button 
+                            className='p-2 hover:bg-gray-100 rounded-full transition-colors flex items-center gap-2 text-sm text-gray-600'
+                            title='Attach file'
+                        >
+                            <PhotoIcon className='w-5 h-5 sm:w-6 sm:h-6' />
+                            <span className='hidden sm:inline'>Attach</span>
+                        </button>
+                        {input?.trim() && (
+                            <button
+                                onClick={() => onGenerate(input)}
+                                className='p-2 bg-black text-white rounded-full hover:bg-gray-800 transition-colors'
+                                title='Generate'
+                            >
+                                <ArrowRightIcon className='w-5 h-5 sm:w-6 sm:h-6' />
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
+
+            <div className='w-full max-w-3xl mx-auto mt-8 sm:mt-12 px-4'>
+                <div className='flex flex-wrap gap-3 justify-center'>
+                    {Lookup.HeroSuggestions.map((suggestion) => (
+                        <button
+                            key={suggestion.id}
+                            onClick={() => onGenerate(suggestion.title)}
+                            className='px-4 py-2 border border-[#4A4A4A] rounded-full  hover:bg-gray-100 transition-colors text-sm sm:text-base whitespace-nowrap'
+                        >
+                            {suggestion.title}
+                        </button>
+                    ))}
+                </div>
+            </div>
         </div>
-        <div className='flex flex-row gap-2 justify-start items-center mt-10'>
-            {Lookup.HeroSuggestions.map((suggestion) => (
-                <h1 key={suggestion.id} className='flex justify-start gap-2 items-center border rounded-4xl p-2 hover:bg-gray-100 cursor-pointer' onClick={() => onGenerate(suggestion.title)}>
-                    <p className='text-md' >{suggestion.title}</p>
-                </h1>
-            ))}
-        </div>
-    </div>
-  )
+    )
 }
 
 export default Hero
