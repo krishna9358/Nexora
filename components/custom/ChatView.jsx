@@ -58,7 +58,7 @@ function ChatView() {
     }
 
     return (
-        <div className='flex flex-col h-[calc(100vh-8rem)] max-w-full border rounded-md border-[#4A4A4A] '>
+        <div className='flex flex-col h-[87vh] '>
             {/* Messages Container */}
             <div className='flex-1 overflow-y-scroll px-4 py-6 space-y-4 scrollbar-hide'>
                 {messages?.map((message, index) => (
@@ -71,7 +71,7 @@ function ChatView() {
                                 <UserCircleIcon className='w-8 h-8 flex-shrink-0' />
                             </div>
                         ) : (
-                            <div className='flex items-start gap-2 max-w-[80%]'>
+                            <div className='flex items-start gap-2 w-full'>
                                 <HeartIcon className='w-8 h-8 flex-shrink-0' />
                                 <div className='bg-gray-100 p-3 rounded-2xl rounded-tl-none'>
                                     <p className='text-sm md:text-base whitespace-pre-wrap'>{message.content}</p>

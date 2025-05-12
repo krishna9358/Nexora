@@ -3,7 +3,7 @@ import CodeView from "@/components/custom/CodeView";
 
 const Chat = () => {
     return (
-        <div className="p-10 pt-4 ">
+        <div className="p-10 pr-0 pb-0 pt-0">
             <div className='grid grid-cols-1 md:grid-cols-4 gap-10'>
                     <div className="md:col-span-1">
                         <ChatView />

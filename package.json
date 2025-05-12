@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@codesandbox/sandpack-react": "^2.20.0",
     "@google/genai": "^0.13.0",
     "@google/generative-ai": "^0.24.1",
     "@heroicons/react": "^2.2.0",
